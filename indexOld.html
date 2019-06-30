@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<head>
+    <title>WebRTC Simple Calling API + Mobile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<!-- My Phone Number & Dial Areas -->
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<div class="container">
+    <div class="row">
+
+        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+        <!-- MY PHONE NUMBER -->
+        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+        <div class="col-sm-6">
+            <div id="my-number-section" class="text-center">
+                <div id="my-number" style="color: black;">Carregando</div>
+                <div id="my-number-title" class="hidden-sm hidden-xs">
+                    <strong>Seu número</strong>
+                </div>
+                <div id="my-number-permalink" class="display-none">
+                    <span class="glyphicon glyphicon-link"></span>
+                    call link:
+                    <a id="my-number-link" href="...">https://...</a>
+                </div>
+            </div>
+            <div id="pubnub-chat-section" class="text-center">
+                <input id="pubnub-chat-input" type="text" placeholder="chat here">
+                <div id="pubnub-chat-output">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+        <!-- Video -->
+        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+        <div class="col-sm-6">
+            <!-- DISPLAY -->
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <div id="video-border">
+                        <div class="pubnub-relative">
+                            <div id="video-self"></div>
+                        </div>
+                        <div id="video-display">
+                            <span class="glyphicon glyphicon-flash"></span>
+                        </div>
+                    </div>
+                    <div id="pubnub-relative">
+                        <div id="video-thumbnail"></div>
+                       <!--  <div id="pubnub-logo">
+                            <div id="pubnub-logo-img"></div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- DIAL CONTROLS -->
+            <div class="row">
+                <div class="col-sm-6 col-xs-7">
+                    <div class="form-group"><div class="input-group">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                    <input id="number" class="form-control" type="number" placeholder="Número">
+                    </div></div>
+                </div>
+                <div class="col-sm-6 col-xs-5 dial-buttons">
+                    <button id="dial" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-earphone"></span>
+                    </button>
+                    <button id="snap" class="btn btn-success">
+                        <span class="glyphicon glyphicon-camera"></span>
+                    </button>
+                    <button id="hangup" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-ban-circle"></span>
+                    </button>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+<!-- WebRTC Peer Connections -->
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+<!-- IMPORTANT: THIS IS AN UNMINIFIED DEVELOPMENT PUBNUB LIBRARY 
+    replace this with the latest versioned, minified CDN lib link before 
+    you deploy your app to a production enviornment.
+    https://github.com/pubnub/javascript#cdn-links
+-->
+<script src="https://cdn.pubnub.com/pubnub.js"></script>
+
+<!-- WebRTC SDK -->
+<script src="js/webrtc-v2.js"></script>
+<script src="js/sound.js"></script>
+<script src="js/call.js"></script>
+</body>
+</html>
