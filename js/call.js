@@ -70,9 +70,12 @@ function connected(session) {
 
     PUBNUB.$('number').value = ''+session.number;
 
-    $("#number_contacts").html(session.number)
+    $(".number_contacts").html(session.number)
     $(".contacts").removeClass("display-none");
 
+    $("#chat_view").removeClass("display-none");
+    $("#chat_with").html("Chat com "+session.number);
+    
     sounds.play('sound/hi');
     console.log("Hi!");
 }
@@ -87,6 +90,7 @@ function ended(session) {
     img_out.innerHTML = '';
     
     $(".contacts").addClass("display-none");
+    $("#chat_view").addClass("display-none");
 
     sounds.play('sound/goodbye');
     console.log("Bye!");
@@ -218,12 +222,12 @@ function add_chat( number, text ) {
             html = '<div class="d-flex justify-content-end mb-4">'+
                         '<div class="msg_cotainer_send">'+
                             '{message}'+
-                            '<span class="msg_time_send">' + str_hora + ', Hoje</span>'+
+                            '<span class="msg_time_send_r">' + str_hora + ', Hoje</span>'+
                         '</div>'+
                         '<div class="img_cont_msg">'+
                             '<img src="img/user.png" class="rounded-circle user_img_msg">'+
-                            '<span style="text-align:center; color:white;">'+
-                                'Você' +
+                            '<span style="text-align:center; color:white; font-size: 9px;">'+
+                                'Você<br>' +
                                 '{number}' +
                             '</span>'+
                         '</div>'+
@@ -232,13 +236,13 @@ function add_chat( number, text ) {
             html = '<div class="d-flex justify-content-start mb-4">'+
                         '<div class="img_cont_msg">'+
                             '<img src="img/user.png" class="rounded-circle user_img_msg">' +
-                            '<span style="text-align:center; color:white;">' +
+                            '<span style="text-align:center; color:white; font-size: 9px;">' +
                                 '{number}' +
                             '</span>' +
                         '</div>' +
                         '<div class="msg_cotainer">' +
                             '{message}'+
-                            '<span class="msg_time_send">' + str_hora + ', Hoje</span>'+
+                            '<span class="msg_time_send_l">' + str_hora + ', Hoje</span>'+
                         '</div>' +
                     '</div>';
         }
