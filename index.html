@@ -15,29 +15,25 @@
     </head>
     <!--Coded With Love By Mutiullah Samim-->
     <body>
-        <div class="container-fluid h-100">
-            <div class="row justify-content-center h-100">
-                <div class="col-md-12 col-lg-12 col-xl-12 head_nmr">
-                    <div class="row justify-content-center h-100">
-                        <div class="col-md-12 col-xl-12 chat">
-                            <div class="card mb-sm-3 mb-md-0 contacts_card" style="height: auto;">
-                                <div id="my-number-section" class="text-center">
-                                    <div id="my-number">Carregando</div>
-                                    <div id="my-number-title" class="hidden-sm hidden-xs">
-                                        <strong>Seu número</strong>
-                                    </div>
-                                    <div id="my-number-permalink" class="display-none">
-                                        <span class="glyphicon glyphicon-link"></span>
-                                        <a id="my-number-link" href="...">https://...</a>
-                                    </div>
-                                </div>
+        <div class="container-fluid" style="height: 100%">
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-xl-12 chat" style="margin-top: 7px;margin-bottom: 7px;">
+                    <div class="card mb-sm-3 mb-md-0 contacts_card" >
+                        <div id="my-number-section" class="text-center">
+                            <div id="my-number">Carregando</div>
+                            <div id="my-number-title" class="hidden-sm hidden-xs">
+                                <strong>Seu número</strong>
+                            </div>
+                            <div id="my-number-permalink" class="display-none">
+                                <span class="glyphicon glyphicon-link"></span>
+                                <a id="my-number-link" href="...">https://...</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
 
-                <div class="col-md-4 col-xl-4 chat">
+                <div class="col-md-12 col-xl-4 chat" style="margin-top: 0; margin-bottom: 0; display: grid;">
                     <div class="card mb-sm-3 mb-md-0 contacts_card">
                         <div class="card-header">
                             <div class="input-group">
@@ -51,7 +47,7 @@
 
 
                             </div>
-                            <div class="col-sm-12 col-xs-12 dial-buttons" style="margin-top: 15px;">
+                            <div class="col-sm-12 col-xs-12 dial-buttons" style="margin-top: 15px; text-align: -webkit-center;">
                                 <button id="dial" class="btn btn-primary">
                                     <span class="fas fa-phone"></span>
                                 </button>
@@ -61,6 +57,9 @@
                                 <button id="hangup" class="btn btn-danger">
                                     <span class="fas fa-ban"></span>
                                 </button>                    
+                            </div>
+
+                            <div class="aviso_call alert alert-light display-none" role="alert" style="margin-top: 15px;">
                             </div>
                         </div>
                         
@@ -84,7 +83,7 @@
 
 
                         <!-- DISPLAY -->
-                        <div class="card-body" style="padding: 0; flex: 0;">
+                        <div id="video_all" class="card-body" style="padding: 0; flex: 0;">
                             <div class="col-xs-12 text-center">
                                 <div id="video-border">
                                     <div class="pubnub-relative">
@@ -105,11 +104,7 @@
                     </div>
                 </div>
 
-
-               
-
-
-                <div class="col-md-8 col-xl-8 chat">
+                <div class="col-md-12 col-xl-8 chat" style="margin-top: 0; margin-bottom: 0; display: grid;">
                     <div id="chat_view" class="card display-none">
                         <div class="card-header msg_head">
                             <div class="d-flex bd-highlight">
@@ -141,6 +136,7 @@
         <!-- WebRTC SDK -->
         <script src="js/webrtc-v2.js"></script>
         <script src="js/sound.js"></script>
+        <!-- <script src="js/screen.js"></script> -->
         <script src="js/call.js"></script>
 
     </body>

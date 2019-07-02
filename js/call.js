@@ -67,6 +67,7 @@ var phone     = window.phone = PHONE({
 function connected(session) {
     video_out.innerHTML = '';
     video_out.appendChild(session.video);
+    console.log(session);
 
     PUBNUB.$('number').value = ''+session.number;
 
@@ -75,9 +76,12 @@ function connected(session) {
 
     $("#chat_view").removeClass("display-none");
     $("#chat_with").html("Chat com "+session.number);
+
+    $(".aviso_call").addClass("display-none");
     
     sounds.play('sound/hi');
-    console.log("Hi!");
+    
+    console.log("connected");
 }
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -93,7 +97,7 @@ function ended(session) {
     $("#chat_view").addClass("display-none");
 
     sounds.play('sound/goodbye');
-    console.log("Bye!");
+    console.log("ended");
 }
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -101,23 +105,39 @@ function ended(session) {
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 function set_icon(icon) {
     video_out.innerHTML = '<span class="glyphicon glyphicon-' + icon + '"></span>';
+    // console.log("set_icon");
 }
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 // Start Phone Call
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 function dial(number) {
+    $(".aviso_call").removeClass("display-none");
+    $(".aviso_call").html('Realizando Chamada ...');
+
     // Hangup an old call
     phone.hangup();
 
     // Dial Number
     var session = phone.dial(number);
 
+    if (session.status != "connected") {
+        $(".aviso_call").removeClass("display-none");
+
+        setTimeout(function(){ 
+            $(".aviso_call").html('Não foi possível realizar a chamada.');
+        }, 3000);
+    }
+
+
     // No Dupelicate Dialing Allowed
-    if (!session) return;
+    if (!session) {
+        return;
+    }
 
     // Show Connecting Status
     set_icon('send');
+
 }
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -168,8 +188,10 @@ phone.ready(function(){
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 function thumbnail(session) {
     img_out.innerHTML = '';
-    img_out.appendChild(session.image);
+    // img_out.appendChild(session.image);
     img_out.appendChild(phone.snap().image);
+
+    // console.log("thumbnail");
 }
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -181,8 +203,11 @@ phone.receive(function(session){
     session.connected(connected);
     session.ended(ended);
 
-    if (!thumbnail.ival)
+    if (!thumbnail.ival){
         thumbnail.ival = setInterval( () => thumbnail(session), 400 );
+    }
+
+    console.log("phone.receive");
 });
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -201,6 +226,8 @@ PUBNUB.bind( 'keydown', chat_in, function(e) {
     phone.send({ text : chat_in.value });
     add_chat( my_number.number, chat_in.value );
     chat_in.value = '';
+
+    console.log("PUBNUB.bind'keydown'");
 } )
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -227,8 +254,7 @@ function add_chat( number, text ) {
                         '<div class="img_cont_msg">'+
                             '<img src="img/user.png" class="rounded-circle user_img_msg">'+
                             '<span style="text-align:center; color:white; font-size: 9px;">'+
-                                'Você<br>' +
-                                '{number}' +
+                                'Você ({number})' +
                             '</span>'+
                         '</div>'+
                     '</div>';    
@@ -263,6 +289,7 @@ function add_chat( number, text ) {
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 function message( session, message ) {
     add_chat( session.number, message.text );
+    console.log("message'");
 }
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -270,6 +297,7 @@ function message( session, message ) {
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 function safetxt(text) {
     return (''+text).replace( /[<>]/g, '' );
+    console.log("safetxt");
 }
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -279,6 +307,8 @@ phone.unable(function(details){
     console.log("Alert! - Reload Page.");
     console.log(details);
     set_icon('remove');
+
+    console.log("phone.unable");
 });
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -286,6 +316,8 @@ phone.unable(function(details){
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 phone.debug(function(details){
     if (JSON.stringify(details).indexOf('FAIL') > 0) console.log(details);
+
+    // console.log("debug");
 });
 
 })();
